@@ -1,0 +1,45 @@
+{
+  "name": "elec",
+  "productName": "Elec",
+  "version": "0.0.0",
+  "description": "My brilliant app",
+  "license": "MIT",
+  "main": "index.js",
+  "repository": "adrien59cadri/elec",
+  "author": {
+    "name": "adrien courdavault",
+    "email": "adrien.courdavault@arturia.com",
+    "url": "toto.fr"
+  },
+  "engines": {
+    "node": ">=0.10.0"
+  },
+  "scripts": {
+    "start": "electron .",
+    "build": "electron-packager . $npm_package_productName --out=dist --ignore=dist --prune --asar --all --version=0.30.0"
+  },
+  "files": [
+    "index.js",
+    "index.html",
+    "index.css"
+  ],
+  "keywords": [
+    "electron-app"
+  ],
+  "dependencies": {
+    "electron-debug": "^0.1.1"
+  },
+  "devDependencies": {
+    "electron-packager": "^5.0.0",
+    "electron-prebuilt": "^0.30.0",
+    "fs": "0.0.2",
+    "gulp": "^3.9.0",
+    "gulp-jshint": "^1.11.2",
+    "gulp-util": "^3.0.6",
+    "js-data": "^2.2.3",
+    "js-data-mongodb": "^0.5.1",
+    "jshint": "^2.8.0",
+    "jshint-stylish": "^2.0.1",
+    "mongodb": "^2.0.39"
+  }
+}
