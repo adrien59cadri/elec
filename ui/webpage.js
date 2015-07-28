@@ -34,9 +34,12 @@ document.addEventListener('DOMContentLoaded', function(event){
 			});
 		
 		}
+		{
+			ipc.on('pong-main',function(){console.log('pong-main in render')});
+		}
 		
 
-		ipc.send('command',{'command':'log', 'text':'test log'});
+		ipc.send('command',{'command':'ping-renderer'});
 
 		
 	}

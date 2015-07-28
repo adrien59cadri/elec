@@ -24,11 +24,19 @@ var initDb = function(){
 }
 
 var processCommand = function(event,command){
-	var send_ls_app=function(event){event.sender.send('ls_app_res',AppDocument.getAll());};
+	var send_ls_app=function(event){
+		var res= AppDocument.getAll();
+		console.log("res of get all AppDocument"+JSON.stringify(res)+", now send to renderer");
+		event.sender.send('ls_app_res',res);
+	};
 	///todo replace with a hash of key?
 	var key = command['command'];
 	if(key === "log"){
 		console.log(command['text']);
+	}else 
+	if(key === "ping-renderer"){
+		console.log('ping-render in main')
+		event.sender.send('pong-main');
 	}
 	else if (key==="ls"){
 		var path = command['path'];
