@@ -21,32 +21,33 @@ var initDb = function(){
 	// "store" will now use the MongoDB adapter for all async operations
 	store.registerAdapter('mongodb', adapter, { default: true });
 	AppDocument = store.defineResource({idAttribute: '_id',  table: 'app_list', name:'app_list'});
-}
+};
 
 var processCommand = function(event,command){
 	var send_ls_app=function(event){
 		var res= AppDocument.getAll();
-		console.log("res of get all AppDocument"+JSON.stringify(res)+", now send to renderer");
+		console.log("res of get all AppDocument: "+JSON.stringify(res)+", now send to renderer");
 		event.sender.send('ls_app_res',res);
 	};
 	///todo replace with a hash of key?
-	var key = command['command'];
+	var key = command.command;
 	if(key === "log"){
-		console.log(command['text']);
+		console.log(command.text);
 	}else 
 	if(key === "ping-renderer"){
-		console.log('ping-render in main')
+		console.log('ping-render in main');
 		event.sender.send('pong-main');
 	}
 	else if (key==="ls"){
-		var path = command['path'];
+		var path = command.path;
 		var res = fs.readdirSync(path);
 		console.log(res);
 		event.sender.send('ls_res',res);
 	}else if(key==="add_app"){
 		//for now only github
-		AppDocument.create({'app_name':command['app_name'], 'app_github_url':command['app_github_url']})
-		.then(function(event){
+		AppDocument.create({'app_name':command.app_name, 'app_github_url':command.app_github_url})
+		.then(function(appdoc){
+			console.log("successfully added "+JSON.stringify(appdoc));
 			send_ls_app(event);
 		});
 	}else if(key==="ls_app"){
@@ -64,7 +65,7 @@ function createMainWindow () {
 	win.loadUrl(`file://${__dirname}/ui/webpage.html`);
 	win.on('closed', onClosed);
 	
-	ipc.on('command',processCommand)
+	ipc.on('command',processCommand);
 	
 	
     // Open the devtools.
